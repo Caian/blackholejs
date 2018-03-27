@@ -113,13 +113,14 @@ var render = function () {
 
     controls.update();
 
-    var p = new THREE.Vector3(bhPosition.x, bhPosition.y, bhPosition.z);
+    var p = new THREE.Vector3();
+    p.set(bhPosition.x, bhPosition.y, bhPosition.z);
     p.project(camera);
-    bhScreen = new THREE.Vector2 (p.x / window.innerWidth + 0.5, p.y / window.innerHeight + 0.5);
+    bhScreen.set((1 + p.x)*0.5, (1 + p.y)*0.5);
 
     bhDistance = camera.position.distanceTo(bhPosition);
     bhEffect.uniforms['_Distance'].value = bhDistance;
-    bhEffect.uniforms['_Position'].value = bhScreen;    
+    bhEffect.uniforms['_Position'].value = bhScreen;
     
     composer.render();
 };
