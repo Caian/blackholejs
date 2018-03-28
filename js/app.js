@@ -79,9 +79,9 @@ scene.add(axes);
 
 // Position the objects
 
-cube.position.set(0, 0, -1);
-sphere.position.set(2, 0, 0);
-cone.position.set(-1, 0, 1);
+cube.position.set(0, 0, -5);
+sphere.position.set(5, 0, 0);
+cone.position.set(-3, 0, 3);
 
 // Create the skybox
 
