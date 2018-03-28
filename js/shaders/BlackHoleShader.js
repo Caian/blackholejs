@@ -13,6 +13,8 @@ THREE.BlackHoleShader = {
 		"_Ratio":    { value: 0.0 },
         "_Rad":      { value: 0.0 },
         "_Mul":      { value: 0.0 },
+        "_Off":      { value: 1.0 },
+        "_K":        { value: 1.0 },
         "_EH":       { value: 0 },
         "_Distance": { value: 0.0 },
         "_Position": { value: null }
@@ -39,6 +41,8 @@ THREE.BlackHoleShader = {
         "uniform vec2 _Position;",
         "uniform float _Rad;",
         "uniform float _Mul;",
+        "uniform float _K;",
+        "uniform float _Off;",
         "uniform float _Ratio;",
         "uniform float _Distance;",
 
@@ -56,8 +60,11 @@ THREE.BlackHoleShader = {
 
             "vec4 color = texture2D(tDiffuse, offset);",
 
-            "if (_EH == 1 && rad * _Distance < _Rad)",
-                "color = vec4(0,0,0,1);",
+            "if (_EH == 1 && deformation > _K) {",
+                "vec4 black = vec4(0,0,0,1);",
+                "float f = max(0.0, min((deformation / _K - 1.0) * 20.0, 1.0));",
+                "color = mix(color, black, f);",
+            "}",
 
             "gl_FragColor = color;",
 

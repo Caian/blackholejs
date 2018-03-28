@@ -4,8 +4,10 @@
 
 var BlackHole = function() {
     this.radius = 0.1;
-    this.multiplier = 0.5; // Should be 2
-    this.showHorizon = false;
+    this.multiplier = 2; // Should be 2
+    this.offset = 1.0;
+    this.k = 1.4;
+    this.showHorizon = true;
 };
 
 var blackhole = new BlackHole();
@@ -14,6 +16,8 @@ window.onload = function() {
     var gui = new dat.GUI();
     gui.add(blackhole, 'radius', 0.1, 10);
     gui.add(blackhole, 'multiplier', 0.1, 10);
+    gui.add(blackhole, 'offset', 1, 10);
+    gui.add(blackhole, 'k', 1, 10);
     gui.add(blackhole, 'showHorizon');
 };
 
@@ -146,6 +150,8 @@ var render = function () {
     bhEffect.uniforms['_Position'].value = bhScreen;
     bhEffect.uniforms['_Rad'].value = blackhole.radius;
     bhEffect.uniforms['_Mul'].value = blackhole.multiplier;
+    bhEffect.uniforms['_Off'].value = blackhole.offset;
+    bhEffect.uniforms['_K'].value = blackhole.k;
     bhEffect.uniforms['_EH'].value = blackhole.showHorizon ? 1 : 0;
     
     composer.render();
