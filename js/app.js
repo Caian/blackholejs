@@ -56,18 +56,24 @@ controls.minDistance = 1;
 var geometry1 = new THREE.BoxGeometry(1, 1, 1);
 var geometry2 = new THREE.SphereGeometry(0.5, 32, 32);
 var geometry3 = new THREE.ConeGeometry(0.5, 1, 32);
+var geometry4 = new THREE.CylinderGeometry(2, 2, 0.01, 32);
 
 var material = new THREE.MeshBasicMaterial({ color: "#433F81" });
+
+var texture = new THREE.TextureLoader().load( 'img/swirl.png' );
+var swirl = new THREE.MeshBasicMaterial( { map: texture } );
 
 var cube = new THREE.Mesh(geometry1, material);
 var sphere = new THREE.Mesh(geometry2, material);
 var cone = new THREE.Mesh(geometry3, material);
+var disk = new THREE.Mesh(geometry4, swirl);
 
 // Add objects to Scene
 
 scene.add(cube);
 scene.add(sphere);
 scene.add(cone);
+scene.add(disk);
 
 // Create helpers
 
@@ -82,6 +88,7 @@ scene.add(axes);
 cube.position.set(0, 0, -5);
 sphere.position.set(5, 0, 0);
 cone.position.set(-3, 0, 3);
+disk.position.set(0, 0, 0);
 
 // Create the skybox
 
