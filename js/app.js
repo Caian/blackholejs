@@ -1,4 +1,23 @@
 // ------------------------------------------------
+// DAT.GUI
+// ------------------------------------------------
+
+var BlackHole = function() {
+    this.radius = 0.1;
+    this.multiplier = 0.5; // Should be 2
+    this.showHorizon = false;
+};
+
+var blackhole = new BlackHole();
+
+window.onload = function() {
+    var gui = new dat.GUI();
+    gui.add(blackhole, 'radius', 0.1, 10);
+    gui.add(blackhole, 'multiplier', 0.1, 10);
+    gui.add(blackhole, 'showHorizon');
+};
+
+// ------------------------------------------------
 // BASIC SETUP
 // ------------------------------------------------
 
@@ -28,7 +47,7 @@ document.body.appendChild(renderer.domElement);
 
 // Create camera controls
 
-controls = new THREE.OrbitControls(camera);
+controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.maxDistance = 20;
 controls.minDistance = 1;
 
@@ -100,9 +119,6 @@ var bhDistance = 0;
 var bhRatio = window.innerHeight/window.innerWidth;
 bhEffect.uniforms['_Ratio'].value = bhRatio;
 
-var bhRadius = 0.1;
-bhEffect.uniforms['_Rad'].value = bhRadius;
-
 bhEffect.renderToScreen = true;
 composer.addPass(bhEffect);
 
@@ -121,6 +137,9 @@ var render = function () {
     bhDistance = camera.position.distanceTo(bhPosition);
     bhEffect.uniforms['_Distance'].value = bhDistance;
     bhEffect.uniforms['_Position'].value = bhScreen;
+    bhEffect.uniforms['_Rad'].value = blackhole.radius;
+    bhEffect.uniforms['_Mul'].value = blackhole.multiplier;
+    bhEffect.uniforms['_EH'].value = blackhole.showHorizon ? 1 : 0;
     
     composer.render();
 };
